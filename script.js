@@ -50,15 +50,29 @@ const SYMBOLS = [
   betInput.value     = betAmt;
   slotBetInput.value = betAmt;
 
-  /* ── 칩 UI 업데이트 ── */
-  function updateCoinUI() {
-    const abs = Math.abs(coin).toLocaleString();
-    coinText.textContent = coin < 0 ? '-' + abs + ' (빚)' : abs;
-    moneyEl.className    = coin < 0 ? 'debt' : '';
-    menuBtnCoinflip.disabled = coin < 0;
-    menuBtnSlot.disabled     = coin < 0;
+function updateCoinUI() {
+  const abs = Math.abs(coin).toLocaleString();
+  coinText.textContent =
+    coin < 0
+    ? '-' + abs + ' (빚)'
+    : abs;
+  moneyEl.className =
+    coin < 0
+    ? 'debt'
+    : '';
+  menuBtnCoinflip.disabled =
+    coin < 0;
+  menuBtnSlot.disabled =
+    coin < 0;
+
+  /* 빚 탈출 시 배너 제거 */
+
+  if (coin >= 0) {
+    debtBanner.className = 'debt-banner';
+    slotDebtBanner.className = 'debt-banner';
   }
 
+}
   function saveCoin() {
     try { localStorage.setItem(STORAGE_KEY, coin); } catch (e) {}
   }
@@ -465,7 +479,7 @@ function judgeSlot(bet, finals) {
     draw();
   }
 
-})();
+
 
 
 /* ════════════════════════════
@@ -487,23 +501,6 @@ function updateWorkUI() {
 
 }
 
-
-
-/* 자동 생산 */
-
-setInterval(() => {
-
-  workStored += 0.05;
-
-  workStored =
-    Math.round(workStored * 10) / 10;
-
-  updateWorkUI();
-
-}, 1000);
-
-
-
 /* 칩 클릭 생산 */
 
 window.mineChip = function () {
@@ -518,38 +515,34 @@ window.mineChip = function () {
 };
 
 
-
-/* 수확 */
-
 window.collectWorkChip = function () {
 
   if (workStored <= 0) return;
 
-  /* localStorage 기준으로 직접 불러오기 */
+  coin += workStored;
 
-  let currentCoin =
-    Number(
-      localStorage.getItem('luckrush_coin_v2')
-    ) || 0;
+  coin =
+    Math.round(coin * 10) / 10;
 
-  currentCoin += workStored;
+  saveCoin();
 
-  currentCoin =
-    Math.round(currentCoin * 10) / 10;
+  updateCoinUI();
 
-  localStorage.setItem(
-    'luckrush_coin_v2',
-    currentCoin
-  );
+  if (coin >= 0) {
 
-  /* 화면 즉시 갱신 */
+    btnFront.disabled = false;
+    btnBack.disabled = false;
+    slotSpinBtn.disabled = false;
 
-  document.getElementById("coinText")
-    .innerText =
-      currentCoin;
+    debtBanner.className = 'debt-banner';
+    slotDebtBanner.className = 'debt-banner';
+
+  }
 
   workStored = 0;
 
   updateWorkUI();
 
 };
+
+})();
