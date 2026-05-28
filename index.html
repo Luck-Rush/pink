@@ -205,7 +205,17 @@ p {
 
 <script>
 
-let coin = 1000;
+let coin = localStorage.getItem("coin");
+
+if (coin === null) {
+  coin = 1000;
+} else {
+  coin = Number(coin);
+}
+
+updateCoin();
+
+localStorage.setItem("coin", coin);
 
 function updateCoin() {
 
