@@ -17,7 +17,16 @@
   let spinning     = false;
   let slotSpinning = false;
 
-  const SYMBOLS = ['🍒','🍋','🍊','⭐','7️⃣','💎'];
+
+const SYMBOLS = [
+  '🩷',
+  '💖',
+  '🌷',
+  '🌸',
+  '7️⃣',
+  '🎀'
+];
+
 
   /* DOM */
   const coinText       = document.getElementById('coinText');
@@ -106,12 +115,28 @@
     updateCoinUI();
   };
 
-  window.showTab = function (tab) {
-    document.getElementById('tabGame-content').style.display = tab === 'game' ? 'block' : 'none';
-    document.getElementById('tabShop-content').style.display = tab === 'shop' ? 'block' : 'none';
-    document.getElementById('tabGame').classList.toggle('active-tab', tab === 'game');
-    document.getElementById('tabShop').classList.toggle('active-tab', tab === 'shop');
-  };
+window.showTab = function (tab) {
+
+  document.getElementById('tabGame-content').style.display =
+    tab === 'game' ? 'block' : 'none';
+
+  document.getElementById('tabWork-content').style.display =
+    tab === 'work' ? 'block' : 'none';
+
+  document.getElementById('tabShop-content').style.display =
+    tab === 'shop' ? 'block' : 'none';
+
+  document.getElementById('tabGame')
+    .classList.toggle('active-tab', tab === 'game');
+
+  document.getElementById('tabWork')
+    .classList.toggle('active-tab', tab === 'work');
+
+  document.getElementById('tabShop')
+    .classList.toggle('active-tab', tab === 'shop');
+
+};
+
 
   /* ════════════════════════════
      코인 플립
@@ -174,82 +199,217 @@
     }, 1000);
   };
 
-  /* ════════════════════════════
-     슬롯머신
-  ════════════════════════════ */
-  window.spinSlot = function () {
-    if (slotSpinning || coin < 0) return;
-    const bet = Math.max(1, parseInt(slotBetInput.value) || 1);
 
-    slotSpinning = true;
-    slotSpinBtn.disabled      = true;
-    slotResultEl.textContent  = '';
-    slotResultEl.className    = '';
+/* ════════════════════════════
+   슬롯머신
+════════════════════════════ */
 
-    /* 결과 미리 결정 */
-    const finals = [0,1,2].map(() => Math.floor(Math.random() * SYMBOLS.length));
-    const itemH  = 100;
+window.spinSlot = function () {
 
-    [0,1,2].forEach(i => {
-      const reel     = document.getElementById('reel' + i);
-      const stopAt   = finals[i];
-      const totalH   = reel.querySelectorAll('.reel-item').length * itemH;
-      const stopTime = 500 + i * 350;  /* 0:500ms 1:850ms 2:1200ms */
+  if (slotSpinning || coin < 0) return;
 
-      let pos     = 0;
-      let elapsed = 0;
+  const bet =
+    Math.max(
+      1,
+      parseInt(slotBetInput.value) || 1
+    );
 
-      const tick = setInterval(() => {
-        elapsed += 16;
-        pos = (pos + 28) % totalH;
-        reel.style.top = -pos + 'px';
+  /* 배팅금 먼저 차감 */
 
-        if (elapsed >= stopTime) {
-          clearInterval(tick);
-          reel.style.top = -(stopAt * itemH) + 'px';
+  coin -= bet;
 
-          if (i === 2) {
-            setTimeout(() => judgeSlot(bet, finals), 120);
-          }
+  coin = Number(coin);
+
+  saveCoin();
+  updateCoinUI();
+
+  slotSpinning = true;
+
+  slotSpinBtn.disabled = true;
+
+  slotResultEl.textContent = '';
+  slotResultEl.className = '';
+
+  /* 결과 미리 결정 */
+
+  const finals =
+    [0,1,2].map(() =>
+      Math.floor(
+        Math.random() * SYMBOLS.length
+      )
+    );
+
+  const itemH = 100;
+
+  [0,1,2].forEach(i => {
+
+    const reel =
+      document.getElementById('reel' + i);
+
+    const stopAt = finals[i];
+
+    const totalH =
+      reel.querySelectorAll('.reel-item').length
+      * itemH;
+
+    const stopTime =
+      500 + i * 350;
+
+    let pos = 0;
+
+    let elapsed = 0;
+
+    const tick = setInterval(() => {
+
+      elapsed += 16;
+
+      pos = (pos + 28) % totalH;
+
+      reel.style.top = -pos + 'px';
+
+      if (elapsed >= stopTime) {
+
+        clearInterval(tick);
+
+        reel.style.top =
+          -(stopAt * itemH) + 'px';
+
+        if (i === 2) {
+
+          setTimeout(() => {
+
+            judgeSlot(
+              bet,
+              finals
+            );
+
+          }, 120);
+
         }
-      }, 16);
-    });
-  };
 
-  function judgeSlot(bet, finals) {
-    const syms = finals.map(f => SYMBOLS[f]);
-    let mult = 0;
-
-    if (syms[0] === syms[1] && syms[1] === syms[2]) {
-      mult = syms[0] === '7️⃣' ? 10 : 3;
-    } else if (syms[0] === syms[1] || syms[1] === syms[2] || syms[0] === syms[2]) {
-      mult = 1.5;
-    }
-
-    if (mult > 0) {
-      const gain = Math.floor(bet * mult);
-      coin += gain;
-      saveCoin(); updateCoinUI();
-      slotResultEl.textContent = mult === 10
-        ? `🎰 JACKPOT! +${gain.toLocaleString()}`
-        : `성공! ×${mult}  +${gain.toLocaleString()} ✦`;
-      slotResultEl.className = 'win';
-      launchConfetti();
-    } else {
-      coin -= bet;
-      saveCoin(); updateCoinUI();
-      slotResultEl.textContent = `실패 -${bet.toLocaleString()}${coin < 0 ? '  (돈 벌러 가!)' : ''}`;
-      slotResultEl.className = 'lose';
-      doFlash();
-      if (coin < 0) {
-        slotDebtBanner.className = 'debt-banner show';
-        slotSpinBtn.disabled = true;
       }
+
+    }, 16);
+
+  });
+
+};
+
+
+
+function judgeSlot(bet, finals) {
+
+  const syms =
+    finals.map(f => SYMBOLS[f]);
+
+  let mult = 0;
+
+  /* 쓰리 */
+
+  if (
+    syms[0] === syms[1]
+    &&
+    syms[1] === syms[2]
+  ) {
+
+    mult =
+      syms[0] === '7️⃣'
+      ? 10
+      : 3;
+
+  }
+
+  /* 투 */
+
+  else if (
+
+    syms[0] === syms[1]
+    ||
+    syms[1] === syms[2]
+    ||
+    syms[0] === syms[2]
+
+  ) {
+
+    mult = 1.5;
+
+  }
+
+  /* 성공 */
+
+  if (mult > 0) {
+
+    const gain =
+      Math.floor(
+        bet * mult
+      );
+
+    coin += gain;
+
+    coin = Number(coin);
+
+    saveCoin();
+
+    updateCoinUI();
+
+    slotResultEl.textContent =
+
+      mult === 10
+
+      ? `🎰 JACKPOT! +${gain.toLocaleString()}`
+
+      : `성공! ×${mult}  +${gain.toLocaleString()} ✦`;
+
+    slotResultEl.className = 'win';
+
+    launchConfetti();
+
+  }
+
+  /* 실패 */
+
+  else {
+
+    saveCoin();
+
+    updateCoinUI();
+
+    slotResultEl.textContent =
+
+      `실패 -${bet.toLocaleString()}`
+      +
+      (
+        coin < 0
+        ? '  (돈 벌러 가!)'
+        : ''
+      );
+
+    slotResultEl.className = 'lose';
+
+    doFlash();
+
+    if (coin < 0) {
+
+      slotDebtBanner.className =
+        'debt-banner show';
+
+      slotSpinBtn.disabled = true;
+
     }
 
-    slotSpinning = false;
-    if (coin >= 0) slotSpinBtn.disabled = false;
   }
+
+  slotSpinning = false;
+
+  if (coin >= 0) {
+
+    slotSpinBtn.disabled = false;
+
+  }
+
+}
+
+
 
   /* ── 실패 플래시 ── */
   function doFlash() {
@@ -306,3 +466,90 @@
   }
 
 })();
+
+
+/* ════════════════════════════
+   노동 시스템
+════════════════════════════ */
+
+let workStored = 0;
+
+
+
+/* UI */
+
+function updateWorkUI() {
+
+  document.getElementById("storedText")
+    .innerText =
+      "저장된 칩: "
+      + workStored.toFixed(1);
+
+}
+
+
+
+/* 자동 생산 */
+
+setInterval(() => {
+
+  workStored += 0.05;
+
+  workStored =
+    Math.round(workStored * 10) / 10;
+
+  updateWorkUI();
+
+}, 1000);
+
+
+
+/* 칩 클릭 생산 */
+
+window.mineChip = function () {
+
+  workStored += 0.1;
+
+  workStored =
+    Math.round(workStored * 10) / 10;
+
+  updateWorkUI();
+
+};
+
+
+
+/* 수확 */
+
+window.collectWorkChip = function () {
+
+  if (workStored <= 0) return;
+
+  /* localStorage 기준으로 직접 불러오기 */
+
+  let currentCoin =
+    Number(
+      localStorage.getItem('luckrush_coin_v2')
+    ) || 0;
+
+  currentCoin += workStored;
+
+  currentCoin =
+    Math.round(currentCoin * 10) / 10;
+
+  localStorage.setItem(
+    'luckrush_coin_v2',
+    currentCoin
+  );
+
+  /* 화면 즉시 갱신 */
+
+  document.getElementById("coinText")
+    .innerText =
+      currentCoin;
+
+  workStored = 0;
+
+  updateWorkUI();
+
+};

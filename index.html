@@ -21,27 +21,92 @@
   ════════════════════════════ -->
   <div class="screen active" id="screen-menu">
 
-    <!-- 탭 버튼 -->
-    <div style="display:flex; gap:10px; justify-content:center; margin-bottom:2vh;">
-      <button onclick="showTab('game')" id="tabGame" class="tab-btn active-tab">게임</button>
-      <button onclick="showTab('shop')" id="tabShop" class="tab-btn">상점</button>
-    </div>
+<!-- 탭 버튼 -->
+<div style="display:flex; gap:10px; justify-content:center; margin-bottom:2vh;">
 
-    <!-- 게임 탭 -->
-    <div class="menu-box" id="tabGame-content">
-      <h2>게임 선택</h2>
-      <button id="menuBtnCoinflip" onclick="openGame('coinflip')">코인 플립</button>
-      <button id="menuBtnSlot"     onclick="openGame('slot')">슬롯머신</button>
-      <button onclick="alert('준비 중!')">카드 게임</button>
-    </div>
+  <button onclick="showTab('game')" id="tabGame" class="tab-btn active-tab">
+    게임
+  </button>
 
-    <!-- 상점 탭 -->
-    <div class="menu-box" id="tabShop-content" style="display:none;">
-      <h2>상점</h2>
-      <p style="color:#aaa; font-size:clamp(1rem,2vw,1.4rem); margin-top:2vh;">
-        준비 중입니다...
-      </p>
-    </div>
+  <button onclick="showTab('work')" id="tabWork" class="tab-btn">
+    노동
+  </button>
+
+  <button onclick="showTab('shop')" id="tabShop" class="tab-btn">
+    상점
+  </button>
+
+</div>
+
+<!-- 게임 탭 -->
+<div class="menu-box" id="tabGame-content">
+
+  <h2>게임 선택</h2>
+
+  <button id="menuBtnCoinflip" onclick="openGame('coinflip')">
+    코인 플립
+  </button>
+
+  <button id="menuBtnSlot" onclick="openGame('slot')">
+    슬롯머신
+  </button>
+
+  <button onclick="alert('준비 중!')">
+    카드 게임
+  </button>
+
+</div>
+
+
+<!-- 노동 탭 -->
+
+<div class="menu-box" id="tabWork-content" style="display:none;">
+
+  <h2>노동</h2>
+
+  <p class="work-desc">
+    칩을 눌러 생산하거나<br>
+    자동 생성된 칩을 회수하세요!
+  </p>
+
+<!-- 생산 원 -->
+
+<div class="work-chip" onclick="mineChip()">
+
+  <div class="work-chip-inner">
+    ⛏
+  </div>
+
+</div>
+
+<!-- 저장량 -->
+
+<p id="storedText">
+  모은 칩: 0
+</p>
+
+<!-- 수확 버튼 -->
+
+<button class="harvest-btn" onclick="collectWorkChip()">
+  수확하기
+</button>
+</div>
+
+
+<!-- 상점 탭 -->
+<div class="menu-box" id="tabShop-content" style="display:none;">
+
+  <h2>상점</h2>
+
+  <p style="
+    color:#aaa;
+    font-size:clamp(1rem,2vw,1.4rem);
+    margin-top:2vh;
+  ">
+    준비 중!
+  </p>
+
+</div>
 
   </div>
 
@@ -95,7 +160,7 @@
     <h2>슬롯머신</h2>
 
     <div class="debt-banner" id="slotDebtBanner">
-      칩이 부족해서 게임을 할 수 없어요.<br>노동하세요!
+      칩이 부족합니다. <br>노동하세요!
     </div>
 
     <p class="chance">777 → 10배 &nbsp;·&nbsp; 쓰리 → 3배 &nbsp;·&nbsp; 투 → 1.5배</p>
@@ -107,26 +172,61 @@
     </p>
 
     <!-- 릴 3개 -->
-    <div style="display:flex; justify-content:center; gap:16px; margin:3vh auto;">
-      <div class="reel-wrap"><div class="reel" id="reel0">
-        <div class="reel-item">🩷</div><div class="reel-item">💖</div>
-        <div class="reel-item">🌷</div><div class="reel-item">🌸</div>
-        <div class="reel-item">7️⃣</div><div class="reel-item">🎀</div>
-        <div class="reel-item">🩷</div>
-      </div></div>
-      <div class="reel-wrap"><div class="reel" id="reel1">
-        <div class="reel-item">💖</div><div class="reel-item">🌸</div>
-        <div class="reel-item">🩷</div><div class="reel-item">7️⃣</div>
-        <div class="reel-item">🌷</div><div class="reel-item">🎀</div>
-        <div class="reel-item">💖</div>
-      </div></div>
-      <div class="reel-wrap"><div class="reel" id="reel2">
-        <div class="reel-item">7️⃣</div><div class="reel-item">🩷</div>
-        <div class="reel-item">🎀</div><div class="reel-item">💖</div>
-        <div class="reel-item">🌸</div><div class="reel-item">🌷</div>
-        <div class="reel-item">7️⃣</div>
-      </div></div>
+<div class="slot-row">
+
+  <!-- 릴 1 -->
+
+  <div class="reel-wrap">
+
+    <div class="reel" id="reel0">
+
+      <div class="reel-item">🩷</div>
+      <div class="reel-item">💖</div>
+      <div class="reel-item">🌷</div>
+      <div class="reel-item">🌸</div>
+      <div class="reel-item">7️⃣</div>
+      <div class="reel-item">🎀</div>
+
     </div>
+
+  </div>
+
+  <!-- 릴 2 -->
+
+  <div class="reel-wrap">
+
+    <div class="reel" id="reel1">
+
+      <div class="reel-item">🩷</div>
+      <div class="reel-item">💖</div>
+      <div class="reel-item">🌷</div>
+      <div class="reel-item">🌸</div>
+      <div class="reel-item">7️⃣</div>
+      <div class="reel-item">🎀</div>
+
+    </div>
+
+  </div>
+
+  <!-- 릴 3 -->
+
+  <div class="reel-wrap">
+
+    <div class="reel" id="reel2">
+
+      <div class="reel-item">🩷</div>
+      <div class="reel-item">💖</div>
+      <div class="reel-item">🌷</div>
+      <div class="reel-item">🌸</div>
+      <div class="reel-item">7️⃣</div>
+      <div class="reel-item">🎀</div>
+
+    </div>
+
+  </div>
+
+</div>
+
 
     <button id="slotSpinBtn" onclick="spinSlot()">▶ 돌리기</button>
 
