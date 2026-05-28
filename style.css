@@ -225,29 +225,37 @@ p.bet-row {
 .win  { color: rgb(94, 255, 94); }
 .lose { color: #ff4444; }
 
-/* 슬롯 릴 */
-.reel-wrap {
-  width: 80px;
-  height: 100px;
-  background: #1b1b1b;
-  border: 2px solid hotpink;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
+.slot-row{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  margin:3vh auto;
 }
 
-.reel {
-  position: absolute;
-  width: 100%;
-  top: 0;
+.reel-wrap{
+  width:90px;
+  height:100px;
+  overflow:hidden;
+  border:3px solid #ff8fc5;
+  border-radius:20px;
+  background:#cbb0b0;
+  position:relative;
 }
 
-.reel-item {
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.6rem;
+.reel{
+  position:absolute;
+  width:100%;
+  top:0;
+  left:0;
+}
+
+.reel-item{
+  width:100%;
+  height:100px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:3rem;
 }
 
 /* 실패 플래시 */

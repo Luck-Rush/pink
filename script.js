@@ -345,7 +345,7 @@ function judgeSlot(bet, finals) {
 
   ) {
 
-    mult = 1.5;
+    mult = 2;
 
   }
 
