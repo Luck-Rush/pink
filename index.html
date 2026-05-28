@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>Luck Rush</title>
+<meta charset="UTF-8">
+<title>Luck Rush</title>
 
-  <style>
-
+<style>
 
 @font-face {
   font-family: 'Tangba';
@@ -15,111 +14,151 @@
     url('./Fonts/woff/Tangba11.woff') format('woff');
 }
 
-
 body {
   background: #111;
   color: white;
+
   font-family: 'Tangba';
+
   text-align: center;
+
   margin: 0;
-  padding: 6%;
+
+  padding: 4vw;
+}
+
+/* 전체 영역 */
+
+.container {
+  width: 100%;
+
+  max-width: 900px;
+
+  margin: 0 auto;
 }
 
 /* 제목 */
 
 h1 {
   color: hotpink;
+
   font-weight: normal;
-  font-size: 15vw;
+
+  font-size: clamp(3rem, 8vw, 5rem);
+
   text-shadow:
     0 0 15px hotpink;
-  margin-top: 5%;
+
+  margin-top: 2vh;
 }
 
 /* 소제목 */
 
 h2 {
   font-weight: normal;
-  font-size: 8vw;
-  margin-top: 10%;
+
+  font-size: clamp(1.8rem, 4vw, 3rem);
+
+  margin-top: 6vh;
 }
 
 /* 메뉴 */
 
 .menu,
 .game {
-  margin-top: 8%;
+  margin-top: 5vh;
 }
 
 /* 버튼 */
 
 button {
   background: hotpink;
+
   color: white;
+
   border: none;
-  border-radius: 5vw;
-  padding: 6% 8%;
-  margin-top: 5%;
-  width: 80%;
+
+  border-radius: 20px;
+
+  padding: 20px;
+
+  margin: 10px;
+
+  width: min(80vw, 260px);
+
   cursor: pointer;
+
   font-family: 'Tangba';
-  font-size: 7vw;
+
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+
+  transition: 0.2s;
+}
+
+/* 버튼 호버 */
+
+button:hover {
+  opacity: 0.9;
+
+  transform: scale(1.03);
+
+  box-shadow:
+    0 0 20px hotpink;
 }
 
 /* 결과 */
 
 #result {
-  font-size: 8vw;
-  margin-top: 8%;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+
+  margin-top: 4vh;
 }
 
 /* 코인 */
 
 #money {
-  font-size: 7vw;
-  margin-top: 5%;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+
+  margin-top: 3vh;
 }
 
-/* PC 대응 */
+/* 설명 */
 
-@media (min-width: 768px) {
+p {
+  font-size: clamp(1rem, 2vw, 1.4rem);
+}
 
-  h1 {
-    font-size: 80px;
-  }
+/* 모바일 대응 */
 
-  h2 {
-    font-size: 40px;
+@media (max-width: 768px) {
+
+  body {
+    padding: 8vw;
   }
 
   button {
-    width: 250px;
-    font-size: 24px;
-    border-radius: 20px;
-    padding: 20px;
-  }
+    width: 85vw;
 
-  #money {
-    font-size: 32px;
-  }
-
-  #result {
-    font-size: 40px;
+    padding: 18px;
   }
 
 }
 
-  </style>
+</style>
 </head>
+
 <body>
 
-  <h1>LUCK GAME</h1>
+<div class="container">
+
+  <h1>LUCK RUSH</h1>
 
   <div id="money">
     보유 칩 <span id="coinText">1000</span>
   </div>
 
   <!-- 시작 화면 -->
+
   <div class="menu" id="menu">
 
     <h2>게임 선택</h2>
@@ -138,7 +177,8 @@ button {
 
   </div>
 
-  <!-- 코인 플립 화면 -->
+  <!-- 코인 플립 -->
+
   <div class="game" id="coinflip" style="display:none;">
 
     <h2>코인 플립</h2>
@@ -163,53 +203,59 @@ button {
 
   </div>
 
-  <script>
+</div>
 
-    let coin = 1000;
+<script>
 
-    function updateCoin() {
-      document.getElementById("coinText").innerText = coin;
-    }
+let coin = 1000;
 
-    function openGame(gameId) {
+function updateCoin() {
 
-      document.getElementById("menu").style.display = "none";
+  document.getElementById("coinText").innerText = coin;
+}
 
-      document.getElementById(gameId).style.display = "block";
-    }
+function openGame(gameId) {
 
-    function goMenu() {
+  document.getElementById("menu").style.display = "none";
 
-      document.getElementById("menu").style.display = "block";
+  document.getElementById(gameId).style.display = "block";
+}
 
-      document.getElementById("coinflip").style.display = "none";
+function goMenu() {
 
-      document.getElementById("result").innerText = "";
-    }
+  document.getElementById("menu").style.display = "block";
 
-    function flipCoin(choice) {
+  document.getElementById("coinflip").style.display = "none";
 
-      let result = Math.random() < 0.5 ? "front" : "back";
+  document.getElementById("result").innerText = "";
+}
 
-      if (choice === result) {
+function flipCoin(choice) {
 
-        coin += 100;
+  let result = Math.random() < 0.5
+    ? "front"
+    : "back";
 
-        document.getElementById("result").innerText =
-          "승리! +100";
+  if (choice === result) {
 
-      } else {
+    coin += 100;
 
-        coin -= 100;
+    document.getElementById("result").innerText =
+      "승리! +100";
 
-        document.getElementById("result").innerText =
-          "패배... -100";
-      }
+  } else {
 
-      updateCoin();
-    }
+    coin -= 100;
 
-  </script>
+    document.getElementById("result").innerText =
+      "패배... -100";
+  }
+
+  updateCoin();
+}
+
+</script>
 
 </body>
 </html>
+
