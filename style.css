@@ -285,44 +285,32 @@ p.bet-row {
 /* 노동 칩 */
 
 .work-chip {
-
   width: min(40vw, 220px);
   height: min(40vw, 220px);
-
   margin: 4vh auto;
-
   border-radius: 50%;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
-
   box-shadow:
     0 0 30px hotpink;
-
   transition:
     transform 0.1s,
     box-shadow 0.2s;
-
   user-select: none;
 }
 
 /* 안쪽 */
 
 .work-chip-inner {
-
   font-size: clamp(3rem, 10vw, 6rem);
-
 }
 
 /* 눌렀을 때 */
 
 .work-chip:active {
-
   transform: scale(0.93);
-
   box-shadow:
     0 0 10px hotpink;
 }
@@ -330,123 +318,71 @@ p.bet-row {
 /* 호버 */
 
 .work-chip:hover {
-
   transform: scale(1.03);
-
 }
-
-
 /* 노동 설명 */
 
 .work-desc {
-
   color: #aaa;
-
   font-size: clamp(1rem,2vw,1.4rem);
-
   margin-top: 2vh;
-
 }
-
-
 
 /* 생산 버튼 */
 
 .mine-btn {
-
   margin-top: 3vh;
-
 }
-
-
 
 /* 생산 원 */
 
 .work-chip {
-
   width: min(42vw, 220px);
-
   height: min(42vw, 220px);
-
   margin: 4vh auto 2vh auto;
-
   border-radius: 50%;
-
   background: transparent;
-
   border: 0.45rem solid hotpink;
-
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
   cursor: pointer;
-
   box-shadow:
     0 0 25px hotpink;
-
   transition:
     transform 0.08s,
     box-shadow 0.2s;
-
   user-select: none;
-
 }
-
-
 
 /* 호버 */
-
 .work-chip:hover {
-
   transform: scale(1.03);
-
 }
-
-
 
 /* 클릭 */
 
 .work-chip:active {
-
   transform: scale(0.93);
-
 }
-
-
 
 /* 곡괭이 */
 
 .work-chip-inner {
-
   font-size: clamp(3rem, 11vw, 6rem);
-
 }
-
-
 
 /* 저장량 */
 
 #storedText {
-
   margin-top: 1vh;
-
   margin-bottom: 2vh;
-
   font-size: clamp(1rem,2vw,1.5rem);
-
   color: #ddd;
-
 }
-
-
 
 /* 수확 버튼 */
 
 .harvest-btn {
-
   width: min(60vw, 260px);
-
 }
