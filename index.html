@@ -15,13 +15,14 @@
     url('./Fonts/woff/Tangba11.woff') format('woff');
 }
 
+
 body {
   background: #111;
   color: white;
   font-family: 'Tangba';
   text-align: center;
   margin: 0;
-  padding: 4vw;
+  padding: 6%;
 }
 
 /* 제목 */
@@ -29,25 +30,25 @@ body {
 h1 {
   color: hotpink;
   font-weight: normal;
-  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-size: 15vw;
   text-shadow:
     0 0 15px hotpink;
-  margin-top: 2vh;
+  margin-top: 5%;
 }
 
 /* 소제목 */
 
 h2 {
   font-weight: normal;
-  font-size: clamp(1.5rem, 4vw, 3rem);
-  margin-top: 6vh;
+  font-size: 8vw;
+  margin-top: 10%;
 }
 
-/* 메뉴 영역 */
+/* 메뉴 */
 
 .menu,
 .game {
-  margin-top: 5vh;
+  margin-top: 8%;
 }
 
 /* 버튼 */
@@ -56,55 +57,54 @@ button {
   background: hotpink;
   color: white;
   border: none;
-  border-radius: 1rem;
-  padding: 1em 2em;
-  margin: 1vh 1vw;
+  border-radius: 5vw;
+  padding: 6% 8%;
+  margin-top: 5%;
+  width: 80%;
   cursor: pointer;
   font-family: 'Tangba';
-  font-size: clamp(1rem, 2vw, 1.5rem);
-  transition:
-    transform 0.2s,
-    opacity 0.2s,
-    box-shadow 0.2s;
-  min-width: 20vw;
+  font-size: 7vw;
 }
 
-/* 버튼 호버 */
-
-button:hover {
-  opacity: 0.9;
-  transform: scale(1.03);
-  box-shadow:
-    0 0 20px hotpink;
-}
-
-/* 결과 텍스트 */
+/* 결과 */
 
 #result {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  margin-top: 4vh;
+  font-size: 8vw;
+  margin-top: 8%;
 }
 
-/* 코인 텍스트 */
+/* 코인 */
 
 #money {
-  font-size: clamp(1.2rem, 3vw, 2rem);
-  margin-top: 3vh;
+  font-size: 7vw;
+  margin-top: 5%;
 }
 
-/* 모바일 대응 */
+/* PC 대응 */
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
 
-  body {
-    padding: 8vw;
+  h1 {
+    font-size: 80px;
+  }
+
+  h2 {
+    font-size: 40px;
   }
 
   button {
-    width: 80vw;
-    min-width: unset;
-    padding: 1.2em;
-    margin-top: 2vh;
+    width: 250px;
+    font-size: 24px;
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  #money {
+    font-size: 32px;
+  }
+
+  #result {
+    font-size: 40px;
   }
 
 }
@@ -116,7 +116,7 @@ button:hover {
   <h1>LUCK GAME</h1>
 
   <div id="money">
-    현재 보유 칩 <span id="coinText">1000</span>
+    보유 칩 <span id="coinText">1000</span>
   </div>
 
   <!-- 시작 화면 -->
