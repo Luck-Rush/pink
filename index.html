@@ -17,13 +17,9 @@
 body {
   background: #111;
   color: white;
-
   font-family: 'Tangba';
-
   text-align: center;
-
   margin: 0;
-
   padding: 4vw;
 }
 
@@ -31,9 +27,7 @@ body {
 
 .container {
   width: 100%;
-
   max-width: 900px;
-
   margin: 0 auto;
 }
 
@@ -41,14 +35,10 @@ body {
 
 h1 {
   color: hotpink;
-
   font-weight: normal;
-
   font-size: clamp(3rem, 8vw, 5rem);
-
   text-shadow:
     0 0 15px hotpink;
-
   margin-top: 2vh;
 }
 
@@ -56,9 +46,7 @@ h1 {
 
 h2 {
   font-weight: normal;
-
   font-size: clamp(1.8rem, 4vw, 3rem);
-
   margin-top: 6vh;
 }
 
@@ -73,25 +61,15 @@ h2 {
 
 button {
   background: hotpink;
-
   color: white;
-
   border: none;
-
   border-radius: 20px;
-
   padding: 20px;
-
   margin: 10px;
-
   width: min(80vw, 260px);
-
   cursor: pointer;
-
   font-family: 'Tangba';
-
   font-size: clamp(1.2rem, 2vw, 1.8rem);
-
   transition: 0.2s;
 }
 
@@ -99,9 +77,7 @@ button {
 
 button:hover {
   opacity: 0.9;
-
   transform: scale(1.03);
-
   box-shadow:
     0 0 20px hotpink;
 }
@@ -110,7 +86,6 @@ button:hover {
 
 #result {
   font-size: clamp(1.5rem, 4vw, 2.5rem);
-
   margin-top: 4vh;
 }
 
@@ -118,7 +93,6 @@ button:hover {
 
 #money {
   font-size: clamp(1.3rem, 3vw, 2rem);
-
   margin-top: 3vh;
 }
 
@@ -138,7 +112,6 @@ p {
 
   button {
     width: 85vw;
-
     padding: 18px;
   }
 
@@ -241,14 +214,14 @@ function flipCoin(choice) {
     coin += 100;
 
     document.getElementById("result").innerText =
-      "승리! +100";
+      "성공 +100";
 
   } else {
 
     coin -= 100;
 
     document.getElementById("result").innerText =
-      "패배... -100";
+      "실패 -100";
   }
 
   updateCoin();
