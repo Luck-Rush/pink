@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Luck Rush</title>
+
+</head>
+
+<body>
+
+  <h1>LUCK GAME</h1>
+
+  <div id="money">
+    코인: <span id="coinText">1000</span>
+  </div>
+
+  <!-- 시작 화면 -->
+  <div class="menu" id="menu">
+
+    <h2>게임 선택</h2>
+
+    <button onclick="openGame('coinflip')">
+      코인 플립
+    </button>
+
+    <button onclick="alert('준비 중!')">
+      슬롯머신
+    </button>
+
+    <button onclick="alert('준비 중!')">
+      카드 게임
+    </button>
+
+  </div>
+
+  <!-- 코인 플립 화면 -->
+  <div class="game" id="coinflip" style="display:none;">
+
+    <h2>코인 플립</h2>
+
+    <p>100 코인을 배팅합니다.</p>
+
+    <button onclick="flipCoin('front')">
+      앞면
+    </button>
+
+    <button onclick="flipCoin('back')">
+      뒷면
+    </button>
+
+    <br><br>
+
+    <button onclick="goMenu()">
+      뒤로가기
+    </button>
+
+    <div id="result"></div>
+
+  </div>
+
+  <script>
+
+    let coin = 1000;
+
+    function updateCoin() {
+      document.getElementById("coinText").innerText = coin;
+    }
+
+    function openGame(gameId) {
+
+      document.getElementById("menu").style.display = "none";
+
+      document.getElementById(gameId).style.display = "block";
+    }
+
+    function goMenu() {
+
+      document.getElementById("menu").style.display = "block";
+
+      document.getElementById("coinflip").style.display = "none";
+
+      document.getElementById("result").innerText = "";
+    }
+
+    function flipCoin(choice) {
+
+      let result = Math.random() < 0.5 ? "front" : "back";
+
+      if (choice === result) {
+
+        coin += 100;
+
+        document.getElementById("result").innerText =
+          "승리! +100";
+
+      } else {
+
+        coin -= 100;
+
+        document.getElementById("result").innerText =
+          "패배... -100";
+      }
+
+      updateCoin();
+    }
+
+  </script>
+
+</body>
+</html>
+```
