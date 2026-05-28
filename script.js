@@ -3,7 +3,19 @@
   const STORAGE_KEY = 'luckrush_coin_v2';
   const BET_KEY     = 'luckrush_bet_v2';
 
+  /* ── 저장/불러오기 ── */
+  let coin = (() => {
+    try { const v = localStorage.getItem(STORAGE_KEY); return v !== null ? Number(v) : 10; }
+    catch (e) { return 10; }
+  })();
 
+  let betAmt = (() => {
+    try { const v = localStorage.getItem(BET_KEY); return v !== null ? Math.max(1, Number(v)) : 1; }
+    catch (e) { return 1; }
+  })();
+
+  let spinning     = false;
+  let slotSpinning = false;
 
 const SYMBOLS = [
   '🩷',
@@ -13,7 +25,6 @@ const SYMBOLS = [
   '7️⃣',
   '🎀'
 ];
-
 
   /* DOM */
   const coinText       = document.getElementById('coinText');
@@ -137,7 +148,6 @@ window.showTab = function (tab) {
     .classList.toggle('active-tab', tab === 'shop');
 
 };
-
 
   /* ════════════════════════════
      코인 플립
@@ -296,8 +306,6 @@ window.spinSlot = function () {
 
 };
 
-
-
 function judgeSlot(bet, finals) {
 
   const syms =
@@ -410,8 +418,6 @@ function judgeSlot(bet, finals) {
 
 }
 
-
-
   /* ── 실패 플래시 ── */
   function doFlash() {
     flashOverlay.style.background = 'rgba(255,30,30,0.35)';
@@ -466,16 +472,11 @@ function judgeSlot(bet, finals) {
     draw();
   }
 
-
-
-
 /* ════════════════════════════
    노동 시스템
 ════════════════════════════ */
 
 let workStored = 0;
-
-
 
 /* UI */
 
@@ -500,7 +501,6 @@ window.mineChip = function () {
   updateWorkUI();
 
 };
-
 
 window.collectWorkChip = function () {
 
