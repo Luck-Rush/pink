@@ -6,6 +6,7 @@
 
   <style>
 
+
 @font-face {
   font-family: 'Tangba';
 
@@ -17,53 +18,96 @@
 body {
   background: #111;
   color: white;
-
   font-family: 'Tangba';
-
   text-align: center;
   margin: 0;
-  padding: 40px;
+  padding: 4vw;
 }
+
+/* 제목 */
 
 h1 {
   color: hotpink;
-
+  font-weight: normal;
+  font-size: clamp(2.5rem, 7vw, 5rem);
   text-shadow:
-    0 0 10px hotpink,
-    0 0 20px hotpink;
+    0 0 15px hotpink;
+  margin-top: 2vh;
 }
 
-.menu, .game {
-  margin-top: 40px;
+/* 소제목 */
+
+h2 {
+  font-weight: normal;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  margin-top: 6vh;
 }
+
+/* 메뉴 영역 */
+
+.menu,
+.game {
+  margin-top: 5vh;
+}
+
+/* 버튼 */
 
 button {
   background: hotpink;
   color: white;
   border: none;
-  padding: 15px 30px;
-  margin: 10px;
-  border-radius: 12px;
-  font-size: 18px;
+  border-radius: 1rem;
+  padding: 1em 2em;
+  margin: 1vh 1vw;
   cursor: pointer;
-
   font-family: 'Tangba';
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  transition:
+    transform 0.2s,
+    opacity 0.2s,
+    box-shadow 0.2s;
+  min-width: 20vw;
 }
+
+/* 버튼 호버 */
 
 button:hover {
-  opacity: 0.8;
+  opacity: 0.9;
+  transform: scale(1.03);
+  box-shadow:
+    0 0 20px hotpink;
 }
+
+/* 결과 텍스트 */
 
 #result {
-  font-size: 30px;
-  margin-top: 30px;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-top: 4vh;
 }
+
+/* 코인 텍스트 */
 
 #money {
-  font-size: 24px;
-  margin-top: 20px;
+  font-size: clamp(1.2rem, 3vw, 2rem);
+  margin-top: 3vh;
 }
 
+/* 모바일 대응 */
+
+@media (max-width: 768px) {
+
+  body {
+    padding: 8vw;
+  }
+
+  button {
+    width: 80vw;
+    min-width: unset;
+    padding: 1.2em;
+    margin-top: 2vh;
+  }
+
+}
 
   </style>
 </head>
@@ -72,7 +116,7 @@ button:hover {
   <h1>LUCK GAME</h1>
 
   <div id="money">
-    코인: <span id="coinText">1000</span>
+    현재 보유 칩 <span id="coinText">1000</span>
   </div>
 
   <!-- 시작 화면 -->
