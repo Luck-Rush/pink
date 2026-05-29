@@ -134,7 +134,7 @@
   /* ════════════════════════════
      코인플립
   ════════════════════════════ */
-  const drumMessages = ['두구', '두구두구', '두구두구두구!!'];
+  const drumMessages = ['두구', '두구두구', '두구두구두구!!!'];
 
   window.flip = function (choice) {
     if (spinning || coin < 0) return;
