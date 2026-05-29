@@ -46,8 +46,13 @@ h2 {
 
 #money.debt { color: #ff3355; }
 
-.screen { display: none; }
-.screen.active { display: block; }
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
 
 /* 메뉴 */
 .menu-box {

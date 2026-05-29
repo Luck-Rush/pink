@@ -55,19 +55,22 @@
     카드 게임
   </button>
 
-  <button onclick="showTab('pet')">
-    펫
+  <button onclick="showScreen('pet')">
+    펫 키우기
   </button>
+
 </div>
 
-<!-- 펫 화면 -->
+</div> <!-- screen-menu 끝 -->
+
+<!-- 펫 화면 (밖으로 이동!) -->
 <div class="screen" id="screen-pet">
 
   <button class="back-btn" onclick="goMenu()">
     ← 뒤로가기
   </button>
 
-  <h2>펫</h2>
+  <h2>펫 키우기</h2>
 
   <div class="pet-container">
 
@@ -171,10 +174,12 @@
       <div class="drumroll-text" id="drumText"></div>
     </div>
 
+    <div id="result"></div>
+    
     <button id="btnFront" onclick="flip('front')">앞면</button>
     <button id="btnBack"  onclick="flip('back')">뒷면</button>
 
-    <div id="result"></div>
+    
 
   </div>
 
