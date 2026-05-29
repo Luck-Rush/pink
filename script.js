@@ -134,7 +134,7 @@
   /* ════════════════════════════
      코인플립
   ════════════════════════════ */
-  const drumMessages = ['두구', '두구두구', '두구두구두구!!!'];
+  const drumMessages = ['두구', '두구두구', '두구두구두구'];
 
   window.flip = function (choice) {
     if (spinning || coin < 0) return;
@@ -164,7 +164,7 @@
       clearInterval(spinInterval);
       clearInterval(drumInterval);
 
-      const outcome = Math.random() < 0.5 ? 'front' : 'back';
+      const outcome = Math.random() < 0.25 ? 'front' : 'back';
       const won = choice === outcome;
 
       coinInner.style.transform =
@@ -172,7 +172,7 @@
 
       if (won) {
         coin += bet;
-        resultEl.textContent = `성공! +${bet.toLocaleString()}`;
+        resultEl.textContent = `성공 +${bet.toLocaleString()}`;
         resultEl.className   = 'win';
         launchConfetti();
       } else {

@@ -420,3 +420,17 @@ p.bet-row {
 .pet-status{
   color:#aaa;
 }
+
+.pet-container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding-top:3vh;
+}
+
+.pet-image{
+  width: clamp(14rem, 45vw, 24rem);
+  height:auto;
+  user-select:none;
+  pointer-events:none;
+}
