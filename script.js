@@ -164,7 +164,7 @@
       clearInterval(spinInterval);
       clearInterval(drumInterval);
 
-      const outcome = Math.random() < 0.25 ? 'front' : 'back';
+      const outcome = Math.random() < 0.2 ? 'front' : 'back';
       const won = choice === outcome;
 
       coinInner.style.transform =
