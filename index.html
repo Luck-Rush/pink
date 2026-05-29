@@ -55,8 +55,30 @@
     카드 게임
   </button>
 
+  <button onclick="showTab('pet')">
+    펫
+  </button>
 </div>
 
+<!-- 펫 화면 -->
+<div class="screen" id="screen-pet">
+
+  <button class="back-btn" onclick="goMenu()">
+    ← 뒤로가기
+  </button>
+
+  <h2>펫</h2>
+
+  <div class="pet-container">
+
+    <img
+      src="./pet.png"
+      class="pet-image"
+    >
+
+  </div>
+
+</div>
 
 <!-- 노동 탭 -->
 
@@ -98,13 +120,19 @@
 
   <h2>상점</h2>
 
-  <p style="
-    color:#aaa;
-    font-size:clamp(1rem,2vw,1.4rem);
-    margin-top:2vh;
-  ">
-    준비 중!
-  </p>
+<div class="shop-item">
+
+  <div>
+    <h3>자동 클릭</h3>
+    <p>1초당 1칩 자동 생산</p>
+    <p>가격: 100,000,000칩</p>
+  </div>
+
+  <button onclick="buyAutoMiner()" id="autoMinerBtn">
+    구매
+  </button>
+
+</div>
 
 </div>
 
@@ -234,7 +262,9 @@
 
   </div>
 
-</div><!-- /container -->
+</div>
+
+<!-- /container -->
 
 <div class="flash-overlay" id="flashOverlay"></div>
 <canvas id="confettiCanvas"></canvas>

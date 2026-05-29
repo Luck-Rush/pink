@@ -16,15 +16,9 @@
 
   let spinning     = false;
   let slotSpinning = false;
+  let autoMiner = false;
 
-const SYMBOLS = [
-  '🩷',
-  '💖',
-  '🌷',
-  '🌸',
-  '7️⃣',
-  '🎀'
-];
+const SYMBOLS = ['🩷', '💖', '🌷', '🌸', '7️⃣', '🎀'];
 
   /* DOM */
   const coinText       = document.getElementById('coinText');
@@ -146,6 +140,12 @@ window.showTab = function (tab) {
 
   document.getElementById('tabShop')
     .classList.toggle('active-tab', tab === 'shop');
+
+  document.getElementById('tabPet-content').style.display =
+    tab === 'pet' ? 'block' : 'none';
+
+  document.getElementById('tabPet')
+    .classList.toggle('active-tab', tab === 'pet');
 
 };
 
@@ -533,3 +533,45 @@ window.collectWorkChip = function () {
 };
 
 })();
+
+window.addEventListener('keydown', (e) => {
+
+  if (e.code === 'Space') {
+
+    e.preventDefault();
+
+    mineChip();
+
+  }
+
+});
+
+window.buyAutoMiner = function () {
+
+  if (autoMiner) {
+
+    alert('이미 구매했어요!');
+    return;
+
+  }
+
+  if (coin < 100000000) {
+
+    alert('칩이 부족해요!');
+    return;
+
+  }
+
+  coin -= 100000000;
+
+  saveCoin();
+  updateCoinUI();
+
+  autoMiner = true;
+
+  document.getElementById('autoMinerBtn').disabled = true;
+  document.getElementById('autoMinerBtn').innerText = '구매 완료';
+
+  alert('자동 클릭을 구매했어요!');
+
+};

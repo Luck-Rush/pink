@@ -386,3 +386,32 @@ p.bet-row {
 .harvest-btn {
   width: min(60vw, 260px);
 }
+
+.pet-box{
+  margin-top:2vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+
+.pet-face{
+  width:140px;
+  height:140px;
+  border-radius:30px;
+  background:#ffd6ea;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:4rem;
+  border:4px solid #ff8fc5;
+}
+
+.pet-name{
+  font-size:1.4rem;
+  font-weight:bold;
+}
+
+.pet-status{
+  color:#aaa;
+}
