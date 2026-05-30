@@ -23,7 +23,7 @@
   let spinning     = false;
   let slotSpinning = false;
   let autoMiner    = false;
-  let workStored   = 0;
+  let workStored   = 1;
 
   /* ════════════════════════════
      DOM 참조
@@ -50,16 +50,6 @@
   betInput.value     = betAmt;
   slotBetInput.value = betAmt;
 
-  /* ════════════════════════════
-     저장
-  ════════════════════════════ */
-  function saveCoin() {
-    try { localStorage.setItem(STORAGE_KEY, coin); } catch {}
-  }
-
-  function saveBet() {
-    try { localStorage.setItem(BET_KEY, betAmt); } catch {}
-  }
 
   /* ════════════════════════════
      UI 업데이트
