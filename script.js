@@ -1,6 +1,22 @@
 (function () {
 
-  localStorage.clear();
+  /* ════════════════════════════
+     상태 변수
+  ════════════════════════════ */
+  let coin = (() => {
+    try { const v = localStorage.getItem(STORAGE_KEY); return v !== null ? Number(v) : 10; }
+    catch (e) { return 10; }
+  })();
+
+  let betAmt = (() => {
+    try { const v = localStorage.getItem(BET_KEY); return v !== null ? Math.max(1, Number(v)) : 1; }
+    catch (e) { return 1; }
+  })();
+
+  let spinning     = false;
+  let slotSpinning = false;
+  let autoMiner    = false;
+  let workStored   = 0;
 
   /* ════════════════════════════
      상수 & 저장 키
