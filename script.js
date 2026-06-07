@@ -383,3 +383,11 @@
   });
 
 })();
+
+/* =════════════════════════════
+    개발자 치트키
+════════════════════════════ */
+window.setMoney = function(amount) {
+  localStorage.setItem('luckrush_coin_v2', amount);
+  location.reload();
+};
