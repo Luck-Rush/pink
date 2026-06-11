@@ -682,7 +682,7 @@
     const bjBetInput = document.getElementById('bjBet');
     bjBetAmt = Math.max(1, parseInt(bjBetInput.value) || 1);
     if (bjBetAmt > coin) {
-      showToast('배팅 칩이 너무 많습니다!', 'warn');
+      showToast('배팅 칩이 보유 칩보다 많습니다!', 'warn');
       bjBetInput.value = Math.max(1, coin);
       return;
     }
