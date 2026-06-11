@@ -15,12 +15,9 @@
     보유 칩 <span id="coinText">10</span>
   </div>
 
-  <!-- ════════════════════════════
-       화면 1 : 메뉴
-  ════════════════════════════ -->
+  <!-- 화면 1 : 메뉴 -->
   <div class="screen active" id="screen-menu">
 
-    <!-- 탭 버튼 -->
     <div style="display:flex; gap:10px; justify-content:center; margin-bottom:2vh;">
       <button onclick="showTab('game')" id="tabGame" class="tab-btn active-tab">게임</button>
       <button onclick="showTab('work')" id="tabWork" class="tab-btn">노동</button>
@@ -33,71 +30,43 @@
       <button id="menuBtnCoinflip" onclick="openGame('coinflip')">코인 플립</button>
       <button id="menuBtnSlot"     onclick="openGame('slot')">슬롯머신</button>
       <button onclick="openGame('blackjack')">블랙잭</button>
-      <button onclick="showScreen('pet')">펫 키우기</button>
+      <button onclick="openGame('pet')">펫 키우기</button>
     </div>
 
     <!-- 노동 탭 -->
     <div class="menu-box" id="tabWork-content" style="display:none;">
       <h2>노동</h2>
       <p class="work-desc">칩을 눌러 생산하거나<br>자동 생성된 칩을 회수하세요!</p>
-
       <div class="work-chip" onclick="mineChip()">
         <div class="work-chip-inner">⛏</div>
       </div>
-
       <p id="storedText">모은 칩: 0</p>
-
       <button class="harvest-btn" onclick="collectWorkChip()">수확하기</button>
     </div>
 
     <!-- 상점 탭 -->
     <div class="menu-box" id="tabShop-content" style="display:none;">
       <h2>상점</h2>
-      <div class="shop-item">
-        <div>
-          <h3>자동 클릭</h3>
-          <p>1초당 1칩 자동 생산</p>
-          <p>가격: 100,000,000칩</p>
-        </div>
-        <button onclick="buyAutoMiner()" id="autoMinerBtn">구매</button>
-      </div>
+      <div id="shopDynamic"></div>
     </div>
 
   </div>
-  <!-- /screen-menu -->
 
-  <!-- ════════════════════════════
-       화면 : 펫 키우기
-  ════════════════════════════ -->
+  <!-- 화면 : 펫 키우기 -->
   <div class="screen" id="screen-pet">
     <button class="back-btn" onclick="goMenu()">← 뒤로가기</button>
     <h2>펫 키우기</h2>
-    <div class="pet-container">
-      <img src="./images/pet.png" class="pet-image">
-    </div>
+    <div class="pet-body"></div>
   </div>
 
-  <!-- ════════════════════════════
-       화면 2 : 코인 플립
-  ════════════════════════════ -->
+  <!-- 화면 2 : 코인 플립 -->
   <div class="screen" id="screen-coinflip">
     <button class="back-btn" onclick="goMenu()">← 뒤로가기</button>
     <h2>코인 플립</h2>
-
-    <div class="debt-banner" id="debtBanner">
-      칩이 부족해서 게임을 할 수 없어요.<br>노동하세요!
-    </div>
-
+    <div class="debt-banner" id="debtBanner">칩이 부족해서 게임을 할 수 없어요.<br>노동하세요!</div>
     <p class="chance">승률 50% · 배당 2배</p>
-
-    <p class="bet-row">
-      배팅
-      <input class="bet-input" id="betInput" type="number" min="1" value="1" />
-      칩
-    </p>
-
+    <p class="bet-row">배팅 <input class="bet-input" id="betInput" type="number" min="1" value="1" /> 칩</p>
     <div id="result"></div>
-
     <div class="coin-area">
       <div class="lr-coin">
         <div class="lr-coin-inner" id="coinInner">
@@ -107,152 +76,65 @@
       </div>
       <div class="drumroll-text" id="drumText"></div>
     </div>
-
     <button id="btnFront" onclick="flip('front')">앞면</button>
     <button id="btnBack"  onclick="flip('back')">뒷면</button>
   </div>
 
-  <!-- ════════════════════════════
-       화면 3 : 슬롯머신
-  ════════════════════════════ -->
+  <!-- 화면 3 : 슬롯머신 -->
   <div class="screen" id="screen-slot">
     <button class="back-btn" onclick="goMenu()">← 뒤로가기</button>
     <h2>슬롯머신</h2>
-
-    <div class="debt-banner" id="slotDebtBanner">
-      칩이 부족합니다.<br>노동하세요!
-    </div>
-
+    <div class="debt-banner" id="slotDebtBanner">칩이 부족합니다.<br>노동하세요!</div>
     <p class="chance">777 → 10배 &nbsp;·&nbsp; 쓰리 → 3배 &nbsp;·&nbsp; 투 → 2배</p>
-
-    <p class="bet-row">
-      배팅
-      <input class="bet-input" id="slotBetInput" type="number" min="1" value="1" />
-      칩
-    </p>
-
+    <p class="bet-row">배팅 <input class="bet-input" id="slotBetInput" type="number" min="1" value="1" /> 칩</p>
     <div id="slotResult"></div>
-
     <div class="slot-row">
-      <div class="reel-wrap">
-        <div class="reel" id="reel0">
-          <div class="reel-item">🩷</div>
-          <div class="reel-item">💖</div>
-          <div class="reel-item">🌷</div>
-          <div class="reel-item">🌸</div>
-          <div class="reel-item">7️⃣</div>
-          <div class="reel-item">🎀</div>
-        </div>
-      </div>
-      <div class="reel-wrap">
-        <div class="reel" id="reel1">
-          <div class="reel-item">🩷</div>
-          <div class="reel-item">💖</div>
-          <div class="reel-item">🌷</div>
-          <div class="reel-item">🌸</div>
-          <div class="reel-item">7️⃣</div>
-          <div class="reel-item">🎀</div>
-        </div>
-      </div>
-      <div class="reel-wrap">
-        <div class="reel" id="reel2">
-          <div class="reel-item">🩷</div>
-          <div class="reel-item">💖</div>
-          <div class="reel-item">🌷</div>
-          <div class="reel-item">🌸</div>
-          <div class="reel-item">7️⃣</div>
-          <div class="reel-item">🎀</div>
-        </div>
-      </div>
+      <div class="reel-wrap"><div class="reel" id="reel0">
+        <div class="reel-item">🩷</div><div class="reel-item">💖</div>
+        <div class="reel-item">🌷</div><div class="reel-item">🌸</div>
+        <div class="reel-item">7️⃣</div><div class="reel-item">🎀</div>
+      </div></div>
+      <div class="reel-wrap"><div class="reel" id="reel1">
+        <div class="reel-item">🩷</div><div class="reel-item">💖</div>
+        <div class="reel-item">🌷</div><div class="reel-item">🌸</div>
+        <div class="reel-item">7️⃣</div><div class="reel-item">🎀</div>
+      </div></div>
+      <div class="reel-wrap"><div class="reel" id="reel2">
+        <div class="reel-item">🩷</div><div class="reel-item">💖</div>
+        <div class="reel-item">🌷</div><div class="reel-item">🌸</div>
+        <div class="reel-item">7️⃣</div><div class="reel-item">🎀</div>
+      </div></div>
     </div>
-
     <button id="slotSpinBtn" onclick="spinSlot()">▶ 돌리기</button>
   </div>
 
 </div>
-<!-- ════════════════════════════
-     화면 4 : 블랙잭
-════════════════════════════ -->
+
+<!-- 화면 4 : 블랙잭 -->
 <div class="screen" id="screen-blackjack">
-
   <button class="back-btn" onclick="goMenu()">← 뒤로가기</button>
-
   <h2>블랙잭</h2>
-
-  <p class="chance">
-    21에 가까우면 승리!
-  </p>
-
-  <p class="bet-row">
-    배팅
-    <input
-      class="bet-input"
-      id="bjBet"
-      type="number"
-      min="1"
-      value="1"
-    />
-    칩
-  </p>
-
+  <p class="chance">21에 가까우면 승리!</p>
+  <p class="bet-row">배팅 <input class="bet-input" id="bjBet" type="number" min="1" value="1" /> 칩</p>
   <div id="bjResult"></div>
-
   <div class="bj-box">
-
     <h3>딜러</h3>
-
-    <div
-      id="dealerCards"
-      class="card-row"
-    ></div>
-
+    <div id="dealerCards" class="card-row"></div>
     <p id="dealerScore"></p>
-
     <h3>플레이어</h3>
-
-    <div
-      id="playerCards"
-      class="card-row"
-    ></div>
-
+    <div id="playerCards" class="card-row"></div>
     <p id="playerScore"></p>
-
   </div>
-
   <div class="bj-buttons">
-
-    <button
-      id="bjStartBtn"
-      onclick="startBlackjack()"
-    >
-      게임 시작
-    </button>
-
-    <button
-      id="bjHitBtn"
-      onclick="hit()"
-      disabled
-    >
-      Hit
-    </button>
-
-    <button
-      id="bjStandBtn"
-      onclick="stand()"
-      disabled
-    >
-      Stand
-    </button>
-
+    <button id="bjStartBtn" onclick="startBlackjack()">게임 시작</button>
+    <button id="bjHitBtn"   onclick="hit()"   disabled>Hit</button>
+    <button id="bjStandBtn" onclick="stand()" disabled>Stand</button>
   </div>
-
 </div>
-<!-- /container -->
 
 <div class="flash-overlay" id="flashOverlay"></div>
 <canvas id="confettiCanvas"></canvas>
 
 <script src="./script.js"></script>
-
 </body>
 </html>
