@@ -32,7 +32,7 @@
       <h2>게임 선택</h2>
       <button id="menuBtnCoinflip" onclick="openGame('coinflip')">코인 플립</button>
       <button id="menuBtnSlot"     onclick="openGame('slot')">슬롯머신</button>
-      <button onclick="alert('준비 중!')">카드 게임</button>
+      <button onclick="openGame('blackjack')">블랙잭</button>
       <button onclick="showScreen('pet')">펫 키우기</button>
     </div>
 
@@ -167,6 +167,83 @@
     </div>
 
     <button id="slotSpinBtn" onclick="spinSlot()">▶ 돌리기</button>
+  </div>
+
+</div>
+<!-- ════════════════════════════
+     화면 4 : 블랙잭
+════════════════════════════ -->
+<div class="screen" id="screen-blackjack">
+
+  <button class="back-btn" onclick="goMenu()">← 뒤로가기</button>
+
+  <h2>블랙잭</h2>
+
+  <p class="chance">
+    21에 가까우면 승리!
+  </p>
+
+  <p class="bet-row">
+    배팅
+    <input
+      class="bet-input"
+      id="bjBet"
+      type="number"
+      min="1"
+      value="1"
+    />
+    칩
+  </p>
+
+  <div id="bjResult"></div>
+
+  <div class="bj-box">
+
+    <h3>딜러</h3>
+
+    <div
+      id="dealerCards"
+      class="card-row"
+    ></div>
+
+    <p id="dealerScore"></p>
+
+    <h3>플레이어</h3>
+
+    <div
+      id="playerCards"
+      class="card-row"
+    ></div>
+
+    <p id="playerScore"></p>
+
+  </div>
+
+  <div class="bj-buttons">
+
+    <button
+      id="bjStartBtn"
+      onclick="startBlackjack()"
+    >
+      게임 시작
+    </button>
+
+    <button
+      id="bjHitBtn"
+      onclick="hit()"
+      disabled
+    >
+      Hit
+    </button>
+
+    <button
+      id="bjStandBtn"
+      onclick="stand()"
+      disabled
+    >
+      Stand
+    </button>
+
   </div>
 
 </div>

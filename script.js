@@ -112,9 +112,20 @@
     updateCoinUI();
   };
 
+  // ★ 수정: gameId → name 으로 통일, 블랙잭 초기화 정상 동작
   window.openGame = function (name) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById('screen-' + name).classList.add('active');
+
+    if (name === 'blackjack') {
+      document.getElementById('bjResult').textContent     = '';
+      document.getElementById('playerCards').innerHTML    = '';
+      document.getElementById('dealerCards').innerHTML    = '';
+      document.getElementById('playerScore').textContent  = '';
+      document.getElementById('dealerScore').textContent  = '';
+      document.getElementById('bjHitBtn').disabled        = true;
+      document.getElementById('bjStandBtn').disabled      = true;
+    }
   };
 
   /* ════════════════════════════
@@ -165,7 +176,7 @@
       clearInterval(spinInterval);
       clearInterval(drumInterval);
 
-      const outcome = Math.random() < 0.2 ? 'front' : 'back';
+      const outcome = Math.random() < 0.3 ? 'front' : 'back';
       const won = choice === outcome;
 
       coinInner.style.transform =
@@ -318,7 +329,6 @@
     btn.disabled  = true;
     btn.innerText = '구매 완료';
 
-    /* 1초당 1칩 자동 생산 */
     setInterval(() => {
       workStored = Math.round((workStored + 1) * 10) / 10;
       updateWorkUI();
@@ -382,12 +392,140 @@
     }
   });
 
-})();
+  /* ════════════════════════════
+     블랙잭 — IIFE 안으로 이동
+  ════════════════════════════ */
+  let bjDeck     = [];
+  let playerHand = [];
+  let dealerHand = [];
+  let bjPlaying  = false;
+  let bjBetAmt   = 0;
 
-/* =════════════════════════════
-    개발자 치트키
-════════════════════════════ */
-window.setMoney = function(amount) {
-  localStorage.setItem('luckrush_coin_v2', amount);
-  location.reload();
-};
+  function createDeck() {
+    const ranks = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+    bjDeck = [];
+    for (let i = 0; i < 4; i++) {
+      ranks.forEach(rank => bjDeck.push(rank));
+    }
+  }
+
+  function drawCard() {
+    const idx = Math.floor(Math.random() * bjDeck.length);
+    return bjDeck.splice(idx, 1)[0];
+  }
+
+  function getScore(hand) {
+    let score = 0;
+    let aces  = 0;
+    hand.forEach(card => {
+      if (card === 'A') { score += 11; aces++; }
+      else if (['J','Q','K'].includes(card)) { score += 10; }
+      else { score += Number(card); }
+    });
+    while (score > 21 && aces > 0) { score -= 10; aces--; }
+    return score;
+  }
+
+  function renderHand(id, hand) {
+    const el = document.getElementById(id);
+    el.innerHTML = '';
+    hand.forEach(card => {
+      const div = document.createElement('div');
+      div.className   = 'card';
+      div.textContent = card;
+      el.appendChild(div);
+    });
+  }
+
+  function updateBlackjackUI() {
+    renderHand('playerCards', playerHand);
+    renderHand('dealerCards', dealerHand);
+    document.getElementById('playerScore').textContent = '점수 : ' + getScore(playerHand);
+    document.getElementById('dealerScore').textContent = '점수 : ' + getScore(dealerHand);
+  }
+
+  window.startBlackjack = function () {
+    if (bjPlaying) return;
+
+    bjBetAmt = Math.max(1, parseInt(document.getElementById('bjBet').value) || 1);
+
+    if (coin < bjBetAmt) {
+      alert('칩 부족!');
+      return;
+    }
+
+    coin -= bjBetAmt;
+    saveCoin();
+    updateCoinUI();
+
+    createDeck();
+    playerHand = [drawCard(), drawCard()];
+    dealerHand = [drawCard(), drawCard()];
+    bjPlaying  = true;
+
+    document.getElementById('bjHitBtn').disabled   = false;
+    document.getElementById('bjStandBtn').disabled  = false;
+    document.getElementById('bjResult').textContent = '';
+    document.getElementById('bjResult').className   = '';
+
+    updateBlackjackUI();
+
+    // 시작 즉시 블랙잭(21) 체크
+    if (getScore(playerHand) === 21) {
+      coin += Math.floor(bjBetAmt * 2.5); // 블랙잭 1.5배 보너스
+      saveCoin();
+      updateCoinUI();
+      endBlackjack('블랙잭! 🎉', true);
+    }
+  };
+
+  window.hit = function () {
+    if (!bjPlaying) return;
+    playerHand.push(drawCard());
+    updateBlackjackUI();
+    if (getScore(playerHand) > 21) {
+      endBlackjack('버스트! 패배', false);
+    }
+  };
+
+  window.stand = function () {
+    if (!bjPlaying) return;
+
+    while (getScore(dealerHand) < 17) {
+      dealerHand.push(drawCard());
+    }
+    updateBlackjackUI();
+
+    const player = getScore(playerHand);
+    const dealer = getScore(dealerHand);
+
+    if (dealer > 21 || player > dealer) {
+      coin += bjBetAmt * 2;
+      saveCoin();
+      updateCoinUI();
+      endBlackjack('승리! 🎉', true);
+    } else if (player === dealer) {
+      coin += bjBetAmt; // 배팅금 환불
+      saveCoin();
+      updateCoinUI();
+      endBlackjack('무승부', null);
+    } else {
+      endBlackjack('패배', false);
+    }
+  };
+
+  function endBlackjack(text, win) {
+    const resultEl = document.getElementById('bjResult');
+    resultEl.textContent = text;
+    // ★ 수정: win===null 이면 무승부 스타일, true/false 로 승패 구분
+    resultEl.className = win === true ? 'win' : win === false ? 'lose' : '';
+
+    document.getElementById('bjHitBtn').disabled   = true;
+    document.getElementById('bjStandBtn').disabled  = true;
+    bjPlaying = false;
+
+    if (win === true) launchConfetti();
+    if (win === false) doFlash();
+  }
+
+})();

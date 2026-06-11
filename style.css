@@ -434,3 +434,54 @@ p.bet-row {
   user-select:none;
   pointer-events:none;
 }
+
+/* =====================
+   블랙잭
+===================== */
+
+.bj-box{
+  margin-top:2vh;
+}
+
+.card-row{
+  display:flex;
+  justify-content:center;
+  gap:.6rem;
+  flex-wrap:wrap;
+
+  margin:.8rem 0;
+}
+
+.card{
+  width:4rem;
+  height:5.5rem;
+
+  background:#fff;
+  color:#000;
+
+  border-radius:.8rem;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  font-size:1.4rem;
+  font-weight:bold;
+}
+
+.bj-buttons{
+  display:flex;
+  justify-content:center;
+  gap:.8rem;
+
+  margin-top:2vh;
+}
+
+#bjResult{
+  min-height:2rem;
+
+  font-size:1.1rem;
+  font-weight:bold;
+
+  margin:1rem 0;
+}
